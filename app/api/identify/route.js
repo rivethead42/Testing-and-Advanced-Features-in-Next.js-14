@@ -26,16 +26,6 @@ export async function POST(request) {
 
     // Create parts for the generation
     const prompt = "Identify this plant and provide its name, scientific name, family, a brief description, and basic care instructions (water, light, and soil requirements). Format the response as a JSON object.";
-    /*const prompt = `
-      You are a plant identification expert. Analyze this plant image and provide accurate information.
-      Return ONLY a JSON object with the following structure, and ensure it's valid JSON:
-      {
-        "name": "Common name of the plant",
-        "scientificName": "Scientific name of the plant",
-        "description": "A brief 2-3 sentence description of the plant",
-        "careInstructions": ["3-4 specific care instructions"]
-      }
-    `;*/
 
     const imageParts = [
       {
