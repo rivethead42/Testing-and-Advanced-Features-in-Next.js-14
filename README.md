@@ -14,6 +14,14 @@ pnpm dev
 bun dev
 ```
 
+## Environment Variables
+You will need to create a .env.local file with the following information:
+```
+GOOGLE_GEMINI_API_KEY=
+API_URL=http://localhost:3000
+```
+You can get a Google Gemini API key here: (https://aistudio.google.com/apikey)
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
