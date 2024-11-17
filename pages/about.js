@@ -6,6 +6,7 @@ import Head from 'next/head';
 // The page component
 export default function About() {
   const [about, setAbout] = useState(null);
+  const delay = ms => new Promise(res => setTimeout(res, ms));
 
   async function getAboutContent() {
     return {
@@ -16,6 +17,7 @@ export default function About() {
 
   useEffect(() => {
     const fetchData = async () => {
+      await delay(5000);
       const data = await getAboutContent();
       setAbout(data);
       console.log(data);
