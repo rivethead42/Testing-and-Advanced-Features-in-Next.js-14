@@ -1,10 +1,63 @@
+/**
+ * @swagger
+ * /api/identify:
+ *   post:
+ *     description: Returns plant info based off an image sent to Google Gemini
+ *     consumes:
+ *       - multipart/form-data
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *              type: object
+ *              properties:
+ *                image:
+ *                  type: string
+ *                  format: base64
+ *           encoding:
+ *             image:
+ *               contentType: image/png, image/jpeg
+ *     responses:
+ *       200:
+ *         description: Returns plant info in a JSON format
+ */
+
 // app/api/identify/route.js
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from 'next/server';
+import path from "path";
+import { writeFile, mkdir } from 'fs/promises';
 
 // Initialize Google Gemini AI with safety settings
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_API_KEY);
 
+// Helper function to save file
+async function saveFile(file) {
+  try {
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    // Create unique filename
+    const timestamp = Date.now();
+    const originalName = file.name.replace(/[^a-zA-Z0-9]/g, '-');
+    const filename = `${timestamp}-${originalName}`;
+
+    // Ensure directory exists
+    const uploadDir = path.join(process.cwd(), 'public/assets');
+    await mkdir(uploadDir, { recursive: true });
+
+    // Save file
+    const filePath = path.join(uploadDir, filename);
+    await writeFile(filePath, buffer);
+
+    // Return public URL
+    return `/assets/${filename}`;
+  } catch(error) {
+    console.error('Error saving file:', error);
+    throw error;
+  }
+}
 export async function POST(request) {
   try {
     const data = await request.formData();
@@ -16,6 +69,9 @@ export async function POST(request) {
         { status: 400 }
       );
     }
+
+    // Save image and get public URL
+    await saveFile(image);
 
     // Convert file to bytes
     const bytes = await image.arrayBuffer();
