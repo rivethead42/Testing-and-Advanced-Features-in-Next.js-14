@@ -11,7 +11,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const handleImageUpload = async (file) => {
-    console.log(file);
+    
     try {
       setLoading(true)
       setError(null)

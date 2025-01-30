@@ -32,7 +32,7 @@ export default function PlantInfo({ plantInfo }) {
           <p className="text-gray-700">{plantInfo.description}</p>
         </div>
         
-        <div className="mb-6">
+        <div className="mb-6" data-testid="plant-info">
           <h3 className="text-xl font-semibold mb-2 text-green-800">Plant Information</h3>
           <div className="bg-green-50 rounded-lg overflow-hidden">
             <div className="px-4 py-5 sm:p-6">
@@ -58,7 +58,7 @@ export default function PlantInfo({ plantInfo }) {
           </div>
         </div>
         
-        <div>
+        <div data-testid="care-instructions">
           <h3 className="text-xl font-semibold mb-2 text-green-800">Care Instructions</h3>
           <ul className="list-disc list-inside text-gray-700 space-y-2">
             <li><span className="font-medium">Water:</span> {plantInfo.care_instructions.water}</li>
